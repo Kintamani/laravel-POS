@@ -13,7 +13,13 @@ class BuatTabelSupplier extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('supplier', function (Blueprint $table) {
+            $table->increments('id_supplier');
+            $table->string('nama', 100);
+            $table->text('alamat');
+            $table->string('telpon',20);
+            $table->timestamps();
+        });
     }
 
     /**

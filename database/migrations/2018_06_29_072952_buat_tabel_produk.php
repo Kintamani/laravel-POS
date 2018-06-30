@@ -13,7 +13,21 @@ class BuatTabelProduk extends Migration
      */
     public function up()
     {
-        //
+    Schema::create('produk', function (Blueprint $table) {
+        $table->increments('id_produk');
+        $table->bigInteger('kode_produk')->unsigned();
+        $table->integer('id_kategori')->unsigned();
+        $table->string('nama_produk', 100);
+        $table->string('merk',50);
+        $table->bigInteger('harga_beli')->unsigned();
+        $table->integer('diskon')->unsigned();
+        $table->bigInteger('harga_jual')->unsigned();
+        $table->integer('stok')->unsigned();
+        $table->increments('id_kategori');
+                
+        
+        $table->timestamps();
+    });
     }
 
     /**

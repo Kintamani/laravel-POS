@@ -13,7 +13,10 @@ class BuatTabelUsers extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('users', function (Blueprint $table) {
+            $table->string('foto',100)->nullable(); 
+            $table->integer('level')->unsigned()->default(2);
+        });
     }
 
     /**

@@ -13,7 +13,12 @@ class BuatTabelPengeluaran extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('pengeluaran', function (Blueprint $table) {
+            $table->increments('id_pengeluaran');
+            $table->text('jenis_pengeluaran');
+            $table->bigInteger('nominal')->unsigned();
+            $table->timestamps();
+        });
     }
 
     /**

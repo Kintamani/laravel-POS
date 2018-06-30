@@ -13,7 +13,15 @@ class BuatTabelPembelian extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('pembelian', function (Blueprint $table) {
+            $table->increments('id_pembelian');
+            $table->integer('id_supplier')->unsigned();
+            $table->integer('total_item')->unsigned();
+            $table->bigInteger('total_harga')->unsigned();
+            $table->integer('diskon')->unsigned();
+            $table->bigInteger('bayar')->unsigned();
+            $table->timestamps();
+        });
     }
 
     /**
