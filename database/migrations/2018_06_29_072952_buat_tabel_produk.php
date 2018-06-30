@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class BuatTabelProduk extends Migration
 {
     /**
@@ -23,9 +24,7 @@ class BuatTabelProduk extends Migration
         $table->integer('diskon')->unsigned();
         $table->bigInteger('harga_jual')->unsigned();
         $table->integer('stok')->unsigned();
-        $table->increments('id_kategori');
                 
-        
         $table->timestamps();
     });
     }
