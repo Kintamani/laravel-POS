@@ -6,11 +6,11 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
+     * untuk memasukan seeding yang di buat.
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+         $this->call(UsersTableSeeder::class);
+         $this->call(SettingTableSeeder::class);
     }
 }
