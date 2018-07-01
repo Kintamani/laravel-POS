@@ -15,3 +15,4 @@
     $text.=$tanggal ." ". $bulan." ".$tahun;
     return $text;
   }
+?>

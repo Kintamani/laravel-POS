@@ -16,13 +16,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('tanggal', function () {
-    echo tanggal_indonesia(date('Y-m-d'));
+Route::group(['middleware'=>['web','cekuser:1']],
+ function () {
+   //
 });
