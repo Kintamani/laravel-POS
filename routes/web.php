@@ -22,3 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('tanggal', function () {
+    echo tanggal_indonesia(date('Y-m-d'));
+});

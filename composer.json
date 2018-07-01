@@ -23,7 +23,13 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/Helpers/FormatUang.php",
+            "app/Helpers/AngkaTerbilang.php",
+            "app/Helpers/TanggalIndonesia.php"
+        ]
+        
     },
     "autoload-dev": {
         "psr-4": {
