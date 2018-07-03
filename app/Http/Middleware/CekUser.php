@@ -13,7 +13,7 @@ class CekUser
     public function handle($request, Closure $next,$level)
     {
         $user = Auth::user();
-        if ($user && $user->level!=$level) {
+        if ($user && $user->level != $level) {
             return redirect('/');
         }
         else return $next($request);
