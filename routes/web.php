@@ -11,15 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts/app');
-});
-
+Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware'=>['web','cekuser:1']],
  function () {
-   //
+   Route::get('kategori/data', 'KategoriController@listData')->name('kategori.data');
+   Route::resource('kategori', 'KategoriController');
+   
 });
