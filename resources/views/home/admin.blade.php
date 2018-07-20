@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Dasboad
+  Dasboard
 @endsection
   
 @section('breadcrumb')
@@ -14,8 +14,7 @@
       <div class="col-md-12">
         <div class="box">
           <div class="box-body">
-            <h1>Selamat Datang</h1>
-            <h2>Anda Login Sebagai Admin</h2>
+            <h4>Selamat Datang <h5>Admin</h5> </h4>   
           </div>
         </div>
       </div>
