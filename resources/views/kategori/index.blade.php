@@ -123,7 +123,7 @@
 
       //menghapusa data
       function deleteData(id){
-        if(confirm("Apakah yakin data akan dihapus")){
+        if(confirm("Apakah yakin data akan dihapus ?")){
           $.ajax({
             url : "kategori/"+id,
             type : "POST",
@@ -134,11 +134,11 @@
             data : {'_method' : 'DELETE', '_token' :
              $('meta[ name = csrf-token]').attr('content')},
             //salah
-             success : function(data){
+            success : function(data){
               table.ajax.reload();
             },
-              error:function(){
-              alert("Tidak dapat menghapus data");
+            error:function(){
+              alert("Tidak dapat menghapus data !");
               //table.ajax.reload();
             }
           });

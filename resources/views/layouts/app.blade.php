@@ -148,8 +148,9 @@
           {{--  <!-- Optionally, you can add icons to the links -->  --}}
           <li><a href="{{ route('home') }}"> <i class="fa fa-dashboard"></i> <span>Dasboard</span></a></li>
           @if (Auth::user()->level==1)
-              <li><a href="{{ route('kategori.index') }}" ><i class="fa fa-cube"></i> <span>Kategori</span></li>
-              {{--  <li><a href="{{route(produk.index)}}"><i class="fa fa-cubes"><span>Produk</span></i></li>
+              <li><a href="{{ route('kategori.index') }}"> <i class="fa fa-cube"></i> <span>Kategori</span></a></li>
+              <li><a href="{{ route('produk.index') }}"> <i class="fa fa-cubes"></i> <span>Produk</span></a></li>
+              {{--  
               <li><a href="{{route(member.index)}}"><i class="fa fa-credit"><span>Member</span></i></li>
               <li><a href="{{route(supplier.index)}}"><i class="fa fa-truck"><span>Supplier</span></i></li>
               <li><a href="{{route(pengeluaran.index)}}"><i class="fa fa-money"><span>Pengeluaran</span></i></li>
