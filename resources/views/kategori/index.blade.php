@@ -61,7 +61,7 @@
       //menyimpan data form tambah / edit beserta validasinya
       $('#modal-form form').validator().on('submit',function(e){
         if(!e.isDefaultPrevented()){
-          var id =('#id').val();
+          var id = $('#id').val();
           if(save_method == "add") url="{{route('kategori.store')}}";
         
           else url = "kategori/"+id;
@@ -99,7 +99,7 @@
       //menampilkan form edit dan menampilkan data pada form tersebut
       function editForm(id){
         save_method = "edit";
-        $('input[name = _method]').val('PATCH');
+        $('input[name=_method]').val('PATCH');
         $('#modal-form form')[0].reset();
         
         $.ajax({
@@ -108,11 +108,11 @@
           dataType : "JSON", 
           
           success: function(data){
-            $('#id').val(data.id_kategori);
-            $('#nama').val(data.nama_kategori);
+            
             $('#modal-form').modal('show');
             $('.modal-title').text('Edit Karakter');
-            
+            $('#id').val(data.id_kategori);
+            $('#nama').val(data.nama_kategori);
             
           },
           error: function(){
@@ -127,11 +127,10 @@
           $.ajax({
             url : "kategori/"+id,
             type : "POST",
-            dataType : "JSON",
             headers: {
               'X-CSRF-TOKEN': $('meta[ name= csrf-token]').attr('content')
             },
-            data : {'_method' : 'DELETE', '_token' :
+            data : {'_method' : 'DELETE', '_token':
              $('meta[ name = csrf-token]').attr('content')},
             //salah
             success : function(data){

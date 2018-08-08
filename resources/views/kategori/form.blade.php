@@ -3,7 +3,7 @@
     <div class="modal-content">
       <form class="form-horizontal" data-toggle="validator" method="POST" >
         
-        {!! csrf_field() !!} {!! method_field('POST') !!} 
+        {{ csrf_field() }} {{ method_field('POST') }} 
         
         <div class="modal-header">
           <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -23,10 +23,10 @@
 
         <div class="modal-footer">
           <button class="btn btn-primary btn-save" type="submit">
-            <i class="fa fa-floppy-o">Simpan</i>
+            <i class="fa fa-floppy-o"></i> Simpan
           </button>
           <button class="btn btn-warning" type="button" data-dismiss="modal">
-            <i class="fa fa-arrow-circle-left">Batal</i> 
+            <i class="fa fa-arrow-circle-left"></i> Batal 
           </button>
         </div>
 

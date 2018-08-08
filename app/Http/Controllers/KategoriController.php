@@ -15,7 +15,7 @@ class KategoriController extends Controller
 
     public function listData()
     {
-        $kategori = Kategori::orderBy('id_kategori','desc') -> get();
+        $kategori = Kategori::orderBy('id_kategori','desc')->get();
         $no = 0 ;
         $data = array();
 
@@ -23,12 +23,14 @@ class KategoriController extends Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $list -> nama_kategori;
+            $row[] = $list->nama_kategori;
             $row[] = '<div class = "btn-group">
-            <a onclick = "editForm('.$list -> id_kategori.')" class = "btn btn-primary btn-sm" >
-            <i class = "fa fa-pencil"></i> Edit</a>
-            <a onclick = "deleteData('.$list -> id_kategori.')" class = "btn btn-danger btn-sm" >
-            <i class = "fa fa-trash"></i> Delete</a>
+                <a onclick = "editForm('.$list -> id_kategori.')" class = "btn btn-primary btn-sm" >
+                    <i class = "fa fa-pencil"></i> Edit
+                </a>
+                <a onclick = "deleteData('.$list -> id_kategori.')" class = "btn btn-danger btn-sm" >
+                    <i class = "fa fa-trash"></i> Delete
+                </a>
             </div>';
             $data[] = $row;
         }

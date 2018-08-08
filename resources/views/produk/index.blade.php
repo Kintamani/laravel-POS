@@ -11,12 +11,12 @@
 
 @section('content')
     <div class="row">
-      <div class="cl-xs-12">
+      <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <a onclick="addForm()" class="btn btn-succerss"><i class="fa fa-plus-circle"></i></a>
-            <a onclick="deleteAll()" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-            <a onclick="printBarcode()" class="btn btn-info"><i class="fa fa-barcode"></i></a>
+            <a onclick="addForm()" class="btn btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+            <a onclick="deleteAll()" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+            <a onclick="printBarcode()" class="btn btn-info"><i class="fa fa-barcode"></i> Cetak Barcode</a>
           </div>
 
           <div class="box-body">
@@ -38,6 +38,7 @@
                     <th width="100">Aksi</th>
                   </tr>
                 </thead>
+                <tbody></tbody>
               </table>
             </form>
           </div>
@@ -50,52 +51,54 @@
 @section('script')
 <script type="text/javascript">
   var table, save_method;
-  $($function(){
+
+  $(function() {
     //Menampilkan data dengan Plugin
     table = $('.table').DataTable({
-      "processing" = true,
-      "serverside" = true,
+      "processing" : true,
+      {{--  "serverside" : true,  --}}
       "ajax" : {
         "url" : "{{ route('produk.data') }}",
         "type" : "GET"
       },
       'columnDefs' : [{
-        'target' : 0,
+        'targets' : 0,
         'searchable' : false,
-        'orderable' : false,
+        'orderable' : false
       }],
-      'order' : [1, 'asc']
+      "order" : [1, 'asc']
     });
+    
 
     //Centang semua checkbox ketika checkbox dengan id #select-all dicentang
     $('#select-all').click(function(){
-      $('input[type="checkbox"]').prop('checked', this.checked);
+      $('input[type = "checkbox"]').prop('checked', this.checked);
     });
 
     //menyimpan data dari form tambah / edit
-    $('#modal-form form').validator().on('submit'.function(e){
+    $('#modal-form form').validator().on('submit', function(e){
       if(!e.isDefaultPrevented()){
         var id = $('#id').val();
         if(save_method == "add") url = "{{ route('produk.store') }}";
         else url = "produk"/+id;
 
-        $ajax ({
+        $.ajax ({
           url : url,
           type : "POST",
           data : $('#modal-form form').serialize(),
-          dataType : 'JSON';
+          dataType : 'JSON',
           success : function(data){
             if(data.msg == "error"){
               alert("kode produk sudah digunakan");
               $('#kode').focus().select();
             }
             else{
-              $('#moda-form').modal('hide');
-              table.ajax.reload;
+              $('#modal-form').modal('hide');
+              table.ajax.reload();
             }
           },
-          error : function(e){
-            alert("Tidak dapat <meyimpan data")
+          error : function(){
+            alert("Tidak dapat meyimpan data");
           }
         });
         return false;
@@ -106,10 +109,10 @@
   //Menampilkan Form tambah data
   function addForm(){
     save_method = "add";
-    $('input[name= _method]').val('POST');
-    $('#modal-form form').modal('show');
+    $('input[name = _method]').val('POST');
+    $('#modal-form').modal('show');
     $('#modal-form form')[0].reset();
-    $('.modal-title').text("Tambah Produk");
+    $('.modal-title').text('Tambah Produk');
     $('#kode').attr('readonly',false);
   }
 
@@ -168,10 +171,10 @@
 
   //Menghapus semua data yang di Centang
   function deleteAll(){
-    if($('input : checked').length<1){
+    if($('input:checked').length < 1 ){
       alert('Pilih data yang akan dihapus!');
     }
-    else if (confirm("Apakah yakin akan menghapus semua data yang terpiih")){
+    else if (confirm("Apakah yakin akan menghapus semua data yang terpih")){
       $.ajax({
         url : "produk/hapus",
         type : "POST",
@@ -192,7 +195,7 @@
 
   //Mencetak barcode ketika tombol cetak Barcode dikiclk
   function printBarcode(){
-    if($('input : checked').length<1){
+    if($('input:checked').length < 1){
       alert('Pilih data yang akan dicetak !');
     }
     else{
