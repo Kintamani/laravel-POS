@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('title')
-    Daftar Produk
+    Daftar Supplier
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li>produk</li>
+    <li>Supplier</li>
 @endsection
 
 @section('content')
@@ -14,59 +14,39 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <a onclick="addForm()" class="btn btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
-            <a onclick="deleteAll()" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
-            <a onclick="printBarcode()" class="btn btn-info"><i class="fa fa-barcode"></i> Cetak Barcode</a>
+            <a onclick="addFrom()" class="btn btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
           </div>
-
           <div class="box-body">
-            <form method="POST" id="form-produk">
-              {{ csrf_field() }}
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th width="20"><input type="checkbox" value="1" id="select-all"></th>
-                    <th width="20">No</th>
-                    <th>Kode Produk</th>
-                    <th>Nama Produk</th>
-                    <th>Kategori</th>
-                    <th>Merk</th>
-                    <th>Harga Beli</th>
-                    <th>Harga Jual</th>
-                    <th>Diskon</th>
-                    <th>Stok</th>
-                    <th width="100">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </form>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="30">No</th>
+                  <th>Nama Supplier</th>
+                  <th>Alamat</th>
+                  <th>Telpon</th>
+                  <th width="100">Aksi</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  @include('produk.form')
+    @include('supplier.form')
 @endsection
-
 @section('script')
-<script type="text/javascript">
+<script>
   var table, save_method;
 
   $(function() {
     //Menampilkan data dengan Plugin
     table = $('.table').DataTable({
       "processing" : true,
-      "serverside" : true,
       "ajax" : {
-        "url" : "{{ route('produk.data') }}",
+        "url" : "{{ route('supplier.data') }}",
         "type" : "GET"
-      },
-      'columnDefs' : [{
-        'targets' : 0,
-        'searchable' : false,
-        'orderable' : false
-      }],
-      "order" : [1, 'asc']
+      }
     });
     
 
@@ -156,7 +136,7 @@
           'X-CSRF-TOKEN': $('meta[ name= csrf-token]').attr('content')
         },
         data : {'_method' : 'DELETE', '_token' :
-         $('meta[ name = csrf-token]').attr('content')},
+        $('meta[ name = csrf-token]').attr('content')},
         //salah
         success : function(data){
           table.ajax.reload();
@@ -203,9 +183,5 @@
     }
   }
 </script>
-    
+
 @endsection
-
-
-
-

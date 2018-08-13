@@ -23,6 +23,9 @@ Route::group(['middleware'=>['web','cekuser:1']],
    Route::post('produk/hapus', 'ProdukController@deleteSelected');
    Route::post('produk/cetak', 'ProdukController@printBarcode');
    Route::resource('produk', 'ProdukController');
+
+   Route::get('supplier/data', 'SupplierController@listData')->name('supplier.data');
+   Route::resource('supplier', 'SupplierController');
   });
 
 
