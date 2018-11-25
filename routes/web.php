@@ -16,16 +16,28 @@ Auth::routes();
 
 Route::group(['middleware'=>['web','cekuser:1']],
   function () {
-   Route::get('kategori/data', 'KategoriController@listData')->name('kategori.data');
-   Route::resource('kategori', 'KategoriController');
-   
-   Route::get('produk/data', 'ProdukController@listData')->name('produk.data');
-   Route::post('produk/hapus', 'ProdukController@deleteSelected');
-   Route::post('produk/cetak', 'ProdukController@printBarcode');
-   Route::resource('produk', 'ProdukController');
+  //kategori
+    Route::get('kategori/data', 'KategoriController@listData')->name('kategori.data');
+    Route::resource('kategori', 'KategoriController');
+  
+  //produk
+    Route::get('produk/data', 'ProdukController@listData')->name('produk.data');
+    Route::post('produk/hapus', 'ProdukController@deleteSelected');
+    Route::post('produk/cetak', 'ProdukController@printBarcode');
+    Route::resource('produk', 'ProdukController');
+  
+  //supplier
+    Route::get('supplier/data', 'SupplierController@listData')->name('supplier.data');
+    Route::resource('supplier', 'SupplierController');
 
-   Route::get('supplier/data', 'SupplierController@listData')->name('supplier.data');
-   Route::resource('supplier', 'SupplierController');
+  //member
+    Route::get('member/data', 'MemberController@listData')->name('member.data');
+    Route::post('member/cetak', 'MemberController@printCard');
+    Route::resource('member', 'MemberController');
+
+  //perngeluaran
+    Route::get('pengeluaran/data', 'PengeluaranController@listData')->name('pengeluaran.data');
+    Route::resource('pengeluaran', 'PengeluaranController');
   });
 
 

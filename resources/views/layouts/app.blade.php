@@ -148,17 +148,17 @@
           {{--  <!-- Optionally, you can add icons to the links -->  --}}
           <li><a href="{{ route('home') }}"> <i class="fa fa-dashboard"></i> <span>Dasboard</span></a></li>
           @if (Auth::user()->level==1)
-              <li><a href="{{ route('kategori.index') }}"> <i class="fa fa-cube"></i> <span>Kategori</span></a></li>
-              <li><a href="{{ route('produk.index') }}"> <i class="fa fa-cubes"></i> <span>Produk</span></a></li>
-              {{--  
-              <li><a href="{{route(member.index)}}"><i class="fa fa-credit"><span>Member</span></i></li>
-              <li><a href="{{route(supplier.index)}}"><i class="fa fa-truck"><span>Supplier</span></i></li>
-              <li><a href="{{route(pengeluaran.index)}}"><i class="fa fa-money"><span>Pengeluaran</span></i></li>
+              <li><a href="{{ route('kategori.index')   }}"> <i class="fa fa-cube">       </i>  <span>Kategori    </span></a></li>
+              <li><a href="{{ route('produk.index')     }}"> <i class="fa fa-cubes">      </i>  <span>Produk      </span></a></li>
+              <li><a href="{{ route('member.index')     }}"> <i class="fa fa-credit-card"></i>  <span>Member      </span></a></li>
+              <li><a href="{{ route('supplier.index')   }}"> <i class="fa fa-truck">      </i>  <span>Supplier    </span></a></li>                
+              <li><a href="{{ route('pengeluaran.index')}}"> <i class="fa fa-money">      </i>  <span>Pengeluaran </span></a></li>
+{{-- 
               <li><a href="{{route(user.index)}}"><i class="fa fa-user"><span>User</span></i></li>
               <li><a href="{{route(penjualan.index)}}"><i class="fa fa-upload"><span>Penjualan</span></i></li>
               <li><a href="{{route(pembelian.index)}}"><i class="fa fa-download"><span>Pembelian</span></i></li>
               <li><a href="{{route(laporan.index)}}"><i class="fa fa-file-pdf-o"><span>Laporan</span></i></li>
-              <li><a href="{{route(setting.index)}}"><i class="fa fa-gears"><span>Setting</span></i></li>  --}}
+              <li><a href="{{route(setting.index)}}"><i class="fa fa-gears"><span>Setting</span></i></li> --}}
           @else
               {{--  jangan dulu  --}}
               {{--  <li><a href="{{route(transaksi.index)}}"><i class="fa fa-shopping-cart"><span>Transaksi</span></i></li>  --}}
@@ -180,7 +180,7 @@
         </h2>
         <ol class="breadcrumb">
           @section('breadcrumb')
-          <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href=""><i class="fa fa-dashboard"></i>Home</a></li>
           @show
         </ol>
       </section>
