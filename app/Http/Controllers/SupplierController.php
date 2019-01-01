@@ -37,11 +37,6 @@ class SupplierController extends Controller
         return response() -> json($output);
     }
 
-    // public function create()
-    // {
-    //     //    
-    // }
-
     public function store(Request $request)
     {
         $supplier = new Supplier;
@@ -50,11 +45,6 @@ class SupplierController extends Controller
         $supplier -> telpon = $request['telpon'];
         $supplier -> save();
     }
-
-    // public function show($id)
-    // {
-    //    //
-    // }
 
     public function edit($id)
     {
@@ -71,9 +61,7 @@ class SupplierController extends Controller
         $supplier -> update();
     }
 
-    /**
-     *
-     */
+    
     public function destroy($id)
     {
         $supplier = Supplier :: find($id);

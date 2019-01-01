@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use POS\Pembelian;
 Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
@@ -35,10 +35,35 @@ Route::group(['middleware'=>['web','cekuser:1']],
     Route::post('member/cetak', 'MemberController@printCard');
     Route::resource('member', 'MemberController');
 
-  //perngeluaran
+  //pengeluaran
     Route::get('pengeluaran/data', 'PengeluaranController@listData')->name('pengeluaran.data');
     Route::resource('pengeluaran', 'PengeluaranController');
+
+  //manajemen user dan ubah profil
+    Route::get('user/data', 'UserController@listData')->name('user.data');
+    Route::resource('user', 'UserController',['only'=> ['index','create','store']]);
+
+  //pembelian
+    Route::get('pembelian/data', 'PembelianController@listData')->name('pembelian.data');
+    Route::get('pembelian/{pembelian}/tambah', 'PembelianController@create');
+    Route::get('pembelian/{pembelian}/lihat', 'PembelianController@show');
+    Route::resource('pembelian', 'PembelianController');
+
+  //pembelian detail
+    Route::get('pembelian_detail/{pembelian_detail}/data', 'PembelianDetailController@listData')->name('pembelian_detail.data');
+    Route::get('pembelian_detail/loadform/{diskon}/{total}', 'PembelianDetailController@loadForm');
+    Route::resource('pembelian_detail', 'PembelianDetailController');
+
   });
+
+  Route::group(['middleware' => 'web'], function() {
+    //user
+    Route::get('user/profil', 'UserController@profil')->name('user.profil');
+    Route::patch('user/{user}/change', 'UserController@changeProfil');
+  });
+
+
+  
 
 
 

@@ -91,11 +91,11 @@ class ProdukController extends Controller
         $produk = Produk::find($id);
         $produk-> nama_produk = $request['nama'];
         $produk-> id_kategori = $request['kategori'];
-        $produk-> merk = $request['merk'];
-        $produk-> harga_beli = $request['harga_beli'];
-        $produk-> diskon = $request['diskon'];
-        $produk-> harga_jual = $request['harga_jual'];
-        $produk-> stok = $request['stok'];
+        $produk-> merk        = $request['merk'];
+        $produk-> harga_beli  = $request['harga_beli'];
+        $produk-> diskon      = $request['diskon'];
+        $produk-> harga_jual  = $request['harga_jual'];
+        $produk-> stok        = $request['stok'];
         $produk-> update();
         echo json_encode(array('msg'=>'success'));
     }

@@ -80,7 +80,7 @@
       if(!e.isDefaultPrevented()){
         var id = $('#id').val();
         if(save_method == "add") url = "{{ route('produk.store') }}";
-        else url = "produk"/+id;
+        else url = "produk/"+id;
 
         $.ajax ({
           url : url,

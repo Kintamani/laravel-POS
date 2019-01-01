@@ -26,10 +26,10 @@ class KategoriController extends Controller
             $row[] = $list->nama_kategori;
             $row[] = '<div class = "btn-group">
                 <a onclick = "editForm('.$list -> id_kategori.')" class = "btn btn-primary btn-sm" >
-                    <i class = "fa fa-pencil"></i> Edit
+                    <i class = "fa fa-pencil"></i> 
                 </a>
                 <a onclick = "deleteData('.$list -> id_kategori.')" class = "btn btn-danger btn-sm" >
-                    <i class = "fa fa-trash"></i> Delete
+                    <i class = "fa fa-trash"></i>
                 </a>
             </div>';
             $data[] = $row;
