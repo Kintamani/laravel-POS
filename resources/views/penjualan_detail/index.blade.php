@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('title')
-    Transaksi Pembelian
+    Transaksi Penjualan
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li>Pembelian</li>
+    <li>Penjualan</li>
     <li>Tambah</li>
 @endsection
 
@@ -16,26 +16,10 @@
         <div class="box">
 
           <div class="box-body">
-            <table>
-              <tr>
-                <td width="150">Supplier : </td>
-                <td> </td>
-                <td><b>{{ $supplier -> nama}} </b></td>
-                <td> </td>
-                <td> Alamat : </td>
-                <td> </td>
-                <td><b> {{ $supplier -> alamat}} </b></td>
-                <td> </td>
-                <td> Telpon : </td>
-                <td> </td>
-                <td><b> {{ $supplier -> telpon}} </b></td>
-              </tr>
-            </table>
-            <hr>  
-              
+                          
             <form class="form form-horizontal form-produk" method="POST">
               {{ csrf_field() }}
-              <input type="hidden" name="idpembelian" value="{{ $idpembelian }}">
+              <input type="hidden" name="idpenjualan" value="{{ $idpenjualan }}">
               <div class="form-group">
                 <label for="kode" class="col-md-2 control-label">
                   Kode Produk
@@ -55,7 +39,7 @@
               
             <form class="form-keranjang">
               {{ csrf_field() }} {{ method_field('PATCH') }}
-              <table class="table table-striped tabel-pembelian">
+              <table class="table table-striped tabel-penjualan">
                 <thead>
                     <tr>
                       <th width="30">No</th>
@@ -63,6 +47,7 @@
                       <th>Nama Produk</th>
                       <th align="right">Harga</th>
                       <th>Jumlah</th>
+                      <th>Diskon</th>
                       <th align="right">Sub Total</th>
                       <th width="100">Aksi</th>
                     </tr>
@@ -77,9 +62,9 @@
             </div>
               
             <div class="col-md-4">
-              <form action="{{ route('pembelian.store') }}" class="form form-horizontal form-pembelian" method="POST">
+              <form action="transaksi/simpan" class="form form-horizontal form-penjualan" method="POST">
                 {{ csrf_field() }}
-                <input type="hiden" name="idpembelian" value="{{ $idpembelian }}">
+                <input type="hiden" name="idpenjualan" value="{{ $idpenjualan }}">
                 <input type="hiden" name="total" id="total">
                 <input type="hiden" name="totalitem" id="totalitem">
                 <input type="hiden" name="bayar" id="bayar"> 
@@ -94,11 +79,27 @@
                 </div>  
                 
                 <div class="form-group">
+                  <label for="member" class="col-md-4 control-label">
+                    Kode Member
+                  </label>  
+                  <div class="col-md-8">
+                    <div class="input-group">
+                      <input type="text" id="member" class="form-control" name="member" value="0" >
+                      <span class="input-group-btn">
+                        <button onclick="showMember()" type="button" class="btn btn-info">
+                          ...
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-group">
                     <label for="diskon" class="col-md-4 control-label">
                       Diskon
                     </label>
                     <div class="col-md-8">
-                      <input type="number" class="form-control" id="diskon" name="diskon" value="0">
+                      <input type="text" class="form-control" id="diskon" name="diskon" value="0" readonly>
                     </div>
                 </div>  
                 
@@ -111,10 +112,28 @@
                     </div>
                 </div>  
               
+                <div class="form-group">
+                    <label for="diterima" class="col-md-4 control-label">
+                      Diterima
+                    </label>
+                    <div class="col-md-8">
+                      <input type="number" class="form-control" value="0" id="diterima" name="diterima">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="kembali" class="col-md-4 control-label">
+                      Kembali
+                    </label>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control" value="0" id="kembali" name="kembali" readonly>
+                    </div>
+                </div>
+
               </form> 
             </div>
           </div>
-          
+
           <div class="box-footer">
             <button type="submit" class="btn btn-primary pull-right simpan">
               <i class="fa fa-floppy-o"></i>
@@ -125,56 +144,69 @@
         </div>
       </div>
     </div>
-    @include('pembelian_detail.produk')
+    @include('penjualan_detail.produk')
+    @include('penjualan_detail.member')
 @endsection
 
 @section('script')
     <script type="text/javascript">
       var table;
 
-      $(function(){
+    $(function(){
         $('.table-produk').DataTable();
 
-        table = $('.tabel-pembelian').DataTable({
+        table = $('.tabel-penjualan').DataTable({
           "dom"        : 'Brt',
           "bSort"      : false,
           "processing" : true,
           "ajax" : {
-            "url" : "{{ route('pembelian_detail.data', $idpembelian) }}",
-            "type" : "GET"
+            "url"      : "{{ route('transaksi.data', $idpenjualan) }}",
+            "type"     : "GET"
           }
         }).on('draw.dt', function(){
+          //menjalankan fungsi loadForm() setiap table di reload
             loadForm($('#diskon').val());
       }); 
       
-      //menghindari submit form saat dienter pada kode produk dan jumlah
+      //1. menghindari submit form saat dienter pada kode produk dan jumlah
       $('.form-produk').on('submit', function(){
         return false;
       });
 
-      $('.form-keranjang').submit('submit', function(){
-        return false;
-      });
+      //2. tambah class siderbar-collapse pada body
+      $('body').addClass('sidebar-collapse');
 
       //process ketika kode produk atau diskon dirubah
       $('#kode').change(function(){
         addItem();
       });
 
-      $('#diskon').change(function(){
-        if($(this).val() ==  "") $(this).val(0).select();
-        loadForm($(this).val());
+      $('.form-keranjang').submit(function(){
+        return false;
+      });
+
+      //3. jalankan fungsi selectMember() ketika member telah dirubah
+      $('#member').change(function(){
+        selectMember($(this).val());
+      });
+
+      //4. jalankan fungsi loadForm() ketika diterima dirubah
+      $('#diterima').change(function(){
+        if($(this).val() == "") $(this).val(0).select();
+        loadForm($('#diskon').val(), $(this).val());
+      }).focus(function(){
+        $(this).select();
       });
 
       //Menyimpan form transaksi saat tombol simpan di klik
       $('.simpan').click(function(){
-        $('.form-pembelian').submit();
+        $('.form-penjualan').submit();
       });
     });
 
     function addItem(){
       $.ajax({
-        url       : '{{ route('pembelian_detail.store') }}',
+        url       : "{{ route('transaksi.store') }}",
         type      : "POST",
         data      : $('.form-produk').serialize(),
         success   : function(data){
@@ -189,19 +221,27 @@
       });
     }  
 
-    function selectItem(data){
-      $('#kode').val(data);
+    function showProduct(){
+      $('#modal-produk').modal('show');
+    }
+
+    function showMember(){
+      $('#modal-member').modal('show');
+    }
+
+    function selectItem(kode){
+      $('#kode').val(kode);
       $('#modal-produk').modal('hide');
       addItem();
     }
 
     function changeCount(id){
       $.ajax({
-        url       :  "pembelian_detail/"+id,
+        url       :  "transaksi/"+id,
         type      :  "POST",
         data      : $('.form-keranjang').serialize(),
         success   : function(data){
-          $('#kode').val('').focus();
+          $('#kode').focus();
           table.ajax.reload(function(){
             loadForm($('#diskon').val());
           });
@@ -212,20 +252,25 @@
       });
     }  
 
-    function showProduct(){
-      $('#modal-produk').modal('show');
+    function selectMember(kode){
+      $('#modal-member').modal('hide');
+      $('#diskon').val('{{ $setting -> diskon_member }}');
+      $('#member').val(kode);
+      loadForm($('#diskon').val());
+      $('#diterima').val(0).focus().select();
     }
 
     function deleteItem(id){
       if(confirm("Apakah anda yakin data akan dihapus ?")){
         $.ajax({
-          url : "pembelian_detail/"+id,
+          url : "transaksi/"+id,
           type : "POST",
           headers: {
             'X-CSRF-TOKEN': $('meta[ name= csrf-token]').attr('content')
           },
-          data : {'_method' : 'DELETE', '_token' :
-           $('meta[ name = csrf-token]').attr('content')
+          data : {
+            '_method' : 'DELETE', '_token' :
+            $('meta[ name = csrf-token]').attr('content')
           },
           //salah
           success : function(data){
@@ -240,20 +285,27 @@
       }
     }
 
-    function loadForm(diskon = 0){
+    function loadForm(diskon = 0, diterima = 0){
       $('#total').val($('.total').text());
       $('#totalitem').val($('.totalitem').text());
 
       $.ajax({
-        url       :  "pembelian_detail/loadform/"+diskon+"/"+$('.total').text(),
+        url       :  "transaksi/loadform/"+diskon+"/"+$('#total').val()+"/"+diterima,
         type      :  "GET",
         dataType  :  "JSON",
         success   : function(data){
           $('#totalrp').val("Rp. "+data.totalrp);
           $('#bayarrp').val("Rp. "+data.bayarrp);
           $('#bayar').val(data.bayar);
-          $('#tampil-bayar').text("Rp. "+data.bayarrp);
+          $('#tampil-bayar').html("<small>Bayar: </small> Rp."+data.bayarrp);
           $('#tampil-terbilang').text(data.terbilang);
+
+          $('#kembali').val("Rp. "+data.kembalirp);
+          
+          if($('#kembali').val() != 0){
+            $('#tampil-bayar').html("<small>Kembali: </small> Rp. "+data.kembalirp);
+            $('#tampil-terbilang').text(data.kembaliterbilang);
+          }
         },
         error     : function(){
           alert("Tidak dapat menampilkan Data!")

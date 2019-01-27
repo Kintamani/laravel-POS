@@ -1,39 +1,31 @@
 @extends('layouts.app')
 
 @section('title')
-    Daftar Pembelian
+    Daftar Penjualan
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li>Pembelian</li>
+    <li>Penjualan</li>
 @endsection
 
 @section('content')
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
-          <div class="box-header">
-            <a onclick="addForm()" class="btn btn-success"><i class="fa fa-plus-circle"></i> Transaksi Baru</a>
-            {{-- @if (!empty(session('idpembelian')))
-                <a href="{{ route('pembelian_detail.index') }}" class="btn btn-info">
-                  <i class="fa fa-plus-circle"></i>
-                  Transaksi Aktif
-                </a>
-            @endif --}}
-          </div>
 
           <div class="box-body">
-              <table class="table table-striped tabel-pembelian">
+              <table class="table table-striped tabel-penjualan">
                 <thead>
                   <tr>
                     <th width="20">No</th>
                     <th>Tanggal</th>
-                    <th>Supplier</th>
+                    <th>Kode Member</th>
                     <th>Total Item</th>
                     <th>Total Harga</th>
                     <th>Diskon</th>
                     <th>Total Bayar</th>
+                    <th>Kasir</th>
                     <th width="100">Aksi</th>
                   </tr>
                 </thead>
@@ -43,23 +35,24 @@
         </div>
       </div>
     </div>
-    @include('pembelian.detail')
-    @include('pembelian.supplier')
+    @include('penjualan.detail')
 @endsection
 
 @section('script')
     <script type="text/javascript">
       
       var tabel, save_method, tabel1;
+
       $(function(){
-        tabel = $('.tabel-pembelian').DataTable({
+        tabel = $('.tabel-penjualan').DataTable({
           "processing" : true,
           "serverside" : true,
           "ajax" : {
-            "url" : "{{ route('pembelian.data') }}",
+            "url" : "{{ route('penjualan.data') }}",
             "type" : "GET"
           }
         });
+
       tabel1 = $('.tabel-detail').DataTable({
         "dom"         : 'Brt',
         "bSort"       : false,
@@ -69,18 +62,22 @@
       $('.tabel-supplier').DataTable();
         
     });
+
     function addForm(){
       $('#modal-supplier').modal('show');
     }  
+
     function showDetail(id){
       $('#modal-detail').modal('show');
-      tabel1.ajax.url("pembelian/"+id+"/lihat");
+
+      tabel1.ajax.url("penjualan/"+id+"/lihat");
       tabel1.ajax.reload();
     }
+
     function deleteData(id){
       if(confirm("Apakah anda yakin data akan dihapus ?")){
         $.ajax({
-          url : "pembelian/"+id,
+          url : "penjualan/"+id,
           type : "POST",
           headers: {
             'X-CSRF-TOKEN': $('meta[ name= csrf-token]').attr('content')
@@ -98,5 +95,6 @@
         });
       }
     }
+
     </script>
 @endsection

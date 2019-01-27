@@ -34,7 +34,7 @@
         <tr>
           <td align="center">
             <div class="box">
-              <img src="{{ asset('images/card.png') }}"  class="card">
+              <img src="{{ asset('images/card.jpg') }}"  class="card">
               <div class="kode">{{ $data->kode_member }}</div>
               <div class="barcode">
                 <img src="data:image/png;base64,{{DNS1D::getBarodePNG( $data->kode_member, 'C39')}}" height="30" width="130">

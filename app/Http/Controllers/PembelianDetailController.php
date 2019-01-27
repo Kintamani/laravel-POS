@@ -1,14 +1,11 @@
 <?php
-
 namespace POS\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Redirect;
 use POS\Pembelian;
 use POS\Supplier;
 use POS\Produk;
 use POS\PembelianDetail;
-
 class PembelianDetailController extends Controller
 {
     
@@ -25,6 +22,7 @@ class PembelianDetailController extends Controller
         $detail = PembelianDetail :: leftJoin('produk', 'produk.kode_produk', '=', 'pembelian_detail.kode_produk')
                                 ->where('id_pembelian', '=', $id)
                                 ->get();
+
         $no         = 0;
         $data       = array();
         $total      = 0;
@@ -53,7 +51,6 @@ class PembelianDetailController extends Controller
         $output = array("data" => $data);
         return response() -> json($output);
     }
-
     
     public function store(Request $request)
     {
@@ -66,7 +63,6 @@ class PembelianDetailController extends Controller
         $detail -> sub_total    = $produk['harga_beli'];
         $detail -> save();
     }
-
     
     public function update(Request $request, $id)
     {
@@ -77,15 +73,12 @@ class PembelianDetailController extends Controller
         $detail ->sub_total = $detail ->harga_beli * $request['jumlah'];
         $detail ->update();
     }
-
     
     public function destroy($id)
     {
         $detail = PembelianDetail :: find($id);
         $detail -> delete();
     }
-
-
     public function loadForm($diskon, $total)
     {
         $bayar = $total - ($diskon/100 * $total);

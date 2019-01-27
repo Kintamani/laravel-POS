@@ -54,12 +54,35 @@ Route::group(['middleware'=>['web','cekuser:1']],
     Route::get('pembelian_detail/loadform/{diskon}/{total}', 'PembelianDetailController@loadForm');
     Route::resource('pembelian_detail', 'PembelianDetailController');
 
+  //penjualan
+    Route::get('penjualan/data', 'PenjualanController@listData')->name('penjualan.data');
+    Route::get('penjualan/{penjualan}/lihat', 'PenjualanController@show');
+    Route::resource('penjualan', 'PenjualanController');
+
+  //laporan
+    Route::get('laporan', 'LaporanController@index')->name('laporan.index');
+    Route::post('laporan', 'LaporanController@refresh')->name('laporan.refresh');
+    Route::get('laporan/data/{awal}/{akhir}', 'LaporanController@listData')->name('laporan.data');
+    Route::get('laporan/pdf/{awal}/{akhir}', 'LaporanController@exportPDF');
+
+  //setting
+    Route::resource('setting', 'SettingController');
   });
 
   Route::group(['middleware' => 'web'], function() {
     //user
     Route::get('user/profil', 'UserController@profil')->name('user.profil');
     Route::patch('user/{user}/change', 'UserController@changeProfil');
+
+    //penjualan detail
+    Route::get('transaksi/baru', 'PenjualanDetailController@newSession')->name('transaksi.new');
+    Route::get('transaksi/{transaksi}/data', 'PenjualanDetailController@listData')->name('transaksi.data');
+    Route::get('transaksi/cetaknota', 'PenjualanDetailController@printNota')->name('transaksi.cetak');
+    Route::get('transaksi/notapdf', 'PenjualanDetailController@notaPDF')->name('transaksi.pdf');
+    Route::post('transaksi/simpan', 'PenjualanDetailController@saveData');
+    Route::get('transaksi/loadform/{diskon}/{total}/{diterima}', 'PenjualanDetailController@loadForm');
+    Route::resource('transaksi', 'PenjualanDetailController');
+   
   });
 
 

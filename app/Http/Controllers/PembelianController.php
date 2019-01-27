@@ -24,13 +24,17 @@ class PembelianController extends Controller
         $pembelian = Pembelian :: leftJoin('supplier', 'supplier.id_supplier', '=', 'pembelian.id_supplier')
                                 ->orderBy('pembelian.id_pembelian','desc')
                                 ->get();
+
+        $tanggal_Pembelian = Pembelian :: orderBy('id_pembelian', 'desc')
+                                ->first();
+        
         $no = 0;
         $data = array();
         foreach($pembelian as $list) {
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = tanggal_indonesia(substr($list->created_at,0,10),true);
+            $row[] = tanggal_indonesia(substr($tanggal_Pembelian->created_at,0,10),true);
             $row[] = $list->nama;
             $row[] = $list->total_item;
             $row[] = "Rp. ".format_uang($list->total_harga);
@@ -59,7 +63,7 @@ class PembelianController extends Controller
     public function show($id)
     {
         $detail = PembelianDetail :: leftJoin('produk', 'produk.kode_produk', '=', 'pembelian_detail.kode_produk')
-                                ->where('id_pembelian','=',$id)
+                                ->where('id_pembelian','=', $id)
                                 ->get();
         $no = 0;
         $data = array();
